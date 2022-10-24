@@ -10,35 +10,23 @@ $dbConn =  connect($db);
  */
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
-    /*if (isset($_GET['id']))
-    {
-      //Mostrar un post
-      $sql = $dbConn->prepare("SELECT * FROM posts where id=:id");
-      $sql->bindValue(':id', $_GET['id']);
-      $sql->execute();
-      header("HTTP/1.1 200 OK");
-      echo json_encode(  $sql->fetch(PDO::FETCH_ASSOC)  );
-      exit();
-	  }
-    else {*/
-      //Mostrar lista de post
+    
       $sql = $dbConn->prepare("SELECT * FROM TIPO_PARTIDO");
       $sql->execute();
       $sql->setFetchMode(PDO::FETCH_ASSOC);
       header("HTTP/1.1 200 OK");
       echo json_encode( $sql->fetchAll()  );
       exit();
-	//}
 }
 
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $input = $_POST;
-    $sql = "INSERT INTO posts
-          (title, status, content, user_id)
+    $sql = "INSERT INTO TIPO_PARTIDO
+          (descripcion)
           VALUES
-          (:title, :status, :content, :user_id)";
+          (:descripcion)";
     $statement = $dbConn->prepare($sql);
     bindAllValues($statement, $input);
     $statement->execute();
@@ -55,34 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //Borrar
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
-	$id = $_GET['id'];
-  $statement = $dbConn->prepare("DELETE FROM posts where id=:id");
-  $statement->bindValue(':id', $id);
+	$idTIPO_PARTIDO = $_GET['idTIPO_PARTIDO'];
+  $statement = $dbConn->prepare("DELETE FROM TIPO_PARTIDO where idTIPO_PARTIDO=:idTIPO_PARTIDO");
+  $statement->bindValue(':idTIPO_PARTIDO', $idTIPO_PARTIDO);
   $statement->execute();
 	header("HTTP/1.1 200 OK");
 	exit();
 }
 
-//Actualizar
-if ($_SERVER['REQUEST_METHOD'] == 'PUT')
-{
-    $input = $_GET;
-    $postId = $input['id'];
-    $fields = getParams($input);
-
-    $sql = "
-          UPDATE posts
-          SET $fields
-          WHERE id='$postId'
-           ";
-
-    $statement = $dbConn->prepare($sql);
-    bindAllValues($statement, $input);
-
-    $statement->execute();
-    header("HTTP/1.1 200 OK");
-    exit();
-}
 
 
 //En caso de que ninguna de las opciones anteriores se haya ejecutado
