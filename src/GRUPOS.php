@@ -43,9 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //Borrar
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
-	$idEstadio = $_GET['idEstadio'];
-  $statement = $dbConn->prepare("DELETE FROM ESTADIO where idEstadio=:idEstadio");
-  $statement->bindValue(':idEstadio', $idEstadio);
+	$idGrupo = $_GET['idGrupo'];
+  $statement = $dbConn->prepare("DELETE FROM GRUPOS where idGrupo=:idGrupo");
+  $statement->bindValue(':idGrupo', $idGrupo);
   $statement->execute();
 	header("HTTP/1.1 200 OK");
 	exit();
