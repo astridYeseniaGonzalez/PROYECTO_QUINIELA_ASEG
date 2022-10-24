@@ -23,10 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $input = $_POST;
-    $sql = "INSERT INTO ESTADIO
-          (nombre_estadio, capacidad)
+    $sql = "INSERT INTO GRUPOS
+          (nombre_grupo)
           VALUES
-          (:nombre_estadio, :capacidad)";
+          (:nombre_grupo)";
     $statement = $dbConn->prepare($sql);
     bindAllValues($statement, $input);
     $statement->execute();
